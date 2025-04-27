@@ -31,7 +31,7 @@ export default function FeaturedDishes() {
   ];
 
   // For handling a feature to show more details when clicking an image (optional)
-  const [selectedDish, setSelectedDish] = useState<DishItem | null>(null);
+//   const [selectedDish, setSelectedDish] = useState<DishItem | null>(null);
 
   return (
     <section id="featured-dishes" className="py-16 bg-gray-50">
