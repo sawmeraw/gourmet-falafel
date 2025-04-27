@@ -12,7 +12,7 @@ export default function Menu() {
   };
 
   return (
-    <section id="menu" className="py-16 bg-gray-50">
+    <section id="menu" className="py-16 bg-primary">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-black">Our Menu</h2>
         
@@ -22,7 +22,7 @@ export default function Menu() {
               type="button"
               className={`px-6 py-3 text-base font-medium rounded-l-lg transition-colors ${
                 activeMenu === 'breakfast'
-                  ? 'bg-amber-600 text-white'
+                  ? 'button-primary text-white'
                   : 'bg-white text-gray-700 hover:bg-gray-50'
               }`}
               onClick={() => setActiveMenu('breakfast')}
@@ -33,7 +33,7 @@ export default function Menu() {
               type="button"
               className={`px-6 py-3 text-base font-medium rounded-r-lg transition-colors ${
                 activeMenu === 'lunch'
-                  ? 'bg-amber-600 text-white'
+                  ? 'button-primary text-white'
                   : 'bg-white text-gray-700 hover:bg-gray-50'
               }`}
               onClick={() => setActiveMenu('lunch')}

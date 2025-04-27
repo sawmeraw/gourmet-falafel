@@ -33,14 +33,14 @@ export default function OpeningHours() {
 
           <div className="w-full lg:w-1/2 flex flex-col justify-center">
             <div className="bg-white rounded-lg shadow-lg p-8 md:p-10 relative">
-              <div className="absolute top-8 right-8 w-24 h-24 bg-amber-500 rounded-bl-full rounded-tr-lg -mt-8 -mr-8 flex items-center justify-center transform">
+              <div className="absolute top-8 right-8 w-24 h-24 button-primary rounded-bl-full rounded-tr-lg -mt-8 -mr-8 flex items-center justify-center transform">
                 <span className="text-white font-bold text-lg transform rotate-12">Open</span>
               </div>
               
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-black">Hours of Operation</h2>
-              <p className="text-gray-600 mb-8">Visit us at your convenience. We're open every day of the week!</p>
+              <p className="text-gray-900 mb-8 text-lg font-secondary">Visit us at your convenience. We're open every day of the week!</p>
               
-              <div className="space-y-4">
+              <div className="space-y-4 font-secondary font-semibold">
                 {hours.map((item) => (
                   <div key={item.day} className="flex justify-between items-center border-b border-gray-200 pb-2">
                     <span className="font-semibold text-gray-800">{item.day}</span>
@@ -49,8 +49,8 @@ export default function OpeningHours() {
                 ))}
               </div>
               
-              <div className="mt-10 bg-amber-50 p-4 rounded-lg border-l-4 border-amber-500">
-                <p className="text-amber-800 font-medium">
+              <div className="mt-10 p-4 rounded-lg border-l-4 bg-primary">
+                <p className="text-black font-medium">
                   <span className="font-bold">Holiday Hours:</span> Hours may vary on holidays and special occasions.
                 </p>
               </div>

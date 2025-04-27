@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-800 text-white py-12">
+    <footer className="bg-primary text-black py-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Logo and About Section */}
@@ -18,7 +18,7 @@ export default function Footer() {
               />
             </div>
             <h3 className="text-xl font-semibold mb-2">Gourmet Falafel</h3>
-            <p className="text-gray-300 text-center md:text-left">Authentic Middle Eastern cuisine at Adelaide Central Market since 2020</p>
+            <p className="text-black text-center md:text-left">Authentic Middle Eastern cuisine at Adelaide Central Market since 2020</p>
           </div>
           
           {/* Contact Information */}
@@ -62,7 +62,7 @@ export default function Footer() {
           </div>
         </div>
         
-        <div className="mt-12 pt-6 border-t border-gray-700 text-center text-gray-400">
+        <div className="mt-12 pt-6 border-t border-gray-700 text-center text-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p>&copy; {new Date().getFullYear()} Gourmet Falafel. All rights reserved.</p>
             

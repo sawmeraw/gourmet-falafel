@@ -5,8 +5,12 @@ html{
 }
 
 :root {
-  --background: #ffffff;
+  --color-primary: rgb(0, 158, 193);
+  --background-primary: #f8f0c6;
   --foreground: #171717;
+  --font-logo: 'Hidayatullah', Arial, Helvetica, sans-serif;
+  --font-primary: "Candaraz", Arial, Helvetica, sans-serif;
+  --font-secondary: "Candarai", Arial, Helvetica, sans-serif;
 }
 
 @font-face {
@@ -31,15 +35,41 @@ html{
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    
   }
-}
+} */
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: 'Candaraz', Helvetica, sans-serif;
+  color: var(--color-primary);
+  font-family: var(--font-primary);
+}
+
+.logo-font {
+  font-family: var(--font-logo);
+}
+
+.font-primary{
+  font-family: var(--font-primary);
+}
+
+.font-secondary{
+  font-family: var(--font-secondary);
+}
+
+.bg-primary{
+  background: var(--background-primary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button-primary{
+  background-color: var(--color-primary);
+}
+
+.text-color-primary{
+  color: var(--color-primary)
 }
