@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Gourmet Falafel",
-  description: "Experience the best tasting falafels at Gourmet Falafel.",
+  description: "Experience the magic of Real Falafel! 100% SA made falafels, vegan and gluten free dishes to enjoy in our Market or takeaway",
 };
 
 export default function RootLayout({

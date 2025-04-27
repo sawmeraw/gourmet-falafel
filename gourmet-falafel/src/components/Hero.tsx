@@ -47,6 +47,12 @@ export default function Hero() {
             <div className="max-w-xl text-white">
               <h1 className="logo-font text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Gourmet Falafel</h1>
               <p className="text-xl md:text-2xl mb-8">A Bite of Tradition, A Dash of Magic</p>
+              <a 
+              href="#menu"
+              className="button-primary transition-colors text-white text-lg px-6 py-3 rounded-md font-semibold inline-block"
+            >
+              View Menu
+            </a>
           </div>
         </div>
       </div>
@@ -56,7 +62,7 @@ export default function Hero() {
           <button
             key={index}
             className={`w-3 h-3 rounded-full ${
-              index === currentIndex ? 'bg-amber-500' : 'bg-white bg-opacity-50'
+              index === currentIndex ? 'button-primary' : 'bg-white bg-opacity-50'
             }`}
             onClick={() => setCurrentIndex(index)}
             aria-label={`Go to slide ${index + 1}`}

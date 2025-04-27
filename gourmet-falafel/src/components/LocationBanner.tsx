@@ -15,8 +15,8 @@ export default function LocationBanner() {
               </div>
               <div>
                 <h3 className="text-xl font-medium text-gray-700">We are located at</h3>
-                <p className="text-3xl font-bold text-color-primary">Adelaide Central Market</p>
-                <p className="text-gray-600 mt-2">Stall 47-48, Adelaide SA 5000</p>
+                <p className="text-3xl font-bold text-color-primary logo-font">Adelaide Central Market</p>
+                <p className="text-gray-600 mt-2">Stall 3-4 Adelaide central market, SA 5000</p>
               </div>
             </div>
             

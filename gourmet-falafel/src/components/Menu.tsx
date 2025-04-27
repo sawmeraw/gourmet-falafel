@@ -20,10 +20,10 @@ export default function Menu() {
           <div className="inline-flex rounded-md shadow-md">
             <button
               type="button"
-              className={`px-6 py-3 text-base font-medium rounded-l-lg transition-colors ${
+              className={`px-6 py-3 text-lg font-medium rounded-l-lg transition-colors ${
                 activeMenu === 'breakfast'
                   ? 'button-primary text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-50'
+                  : 'bg-white text-gray-700 cursor-pointer hover:bg-gray-50'
               }`}
               onClick={() => setActiveMenu('breakfast')}
             >
@@ -31,10 +31,10 @@ export default function Menu() {
             </button>
             <button
               type="button"
-              className={`px-6 py-3 text-base font-medium rounded-r-lg transition-colors ${
+              className={`px-6 py-3 text-lg font-medium rounded-r-lg transition-colors ${
                 activeMenu === 'lunch'
                   ? 'button-primary text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-50'
+                  : 'bg-white text-gray-700 cursor-pointer hover:bg-gray-50'
               }`}
               onClick={() => setActiveMenu('lunch')}
             >
@@ -57,7 +57,7 @@ export default function Menu() {
                   priority
                 />
                 <button 
-                  className="absolute bottom-4 right-4 bg-amber-600 text-white p-2 rounded-full shadow-md hover:bg-amber-700 transition-colors"
+                  className="absolute bottom-4 right-4 button-primary text-white p-2 rounded-full shadow-md hover:bg-amber-700 transition-colors"
                   onClick={toggleFullscreen}
                   aria-label="View larger menu"
                 >
@@ -94,7 +94,6 @@ export default function Menu() {
         </div>
       </div>
 
-      {/* Fullscreen lightbox */}
       {isFullscreen && (
         <div 
           className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4"
@@ -102,7 +101,7 @@ export default function Menu() {
         >
           <div className="relative w-full h-[90vh] max-w-6xl">
             <button 
-              className="absolute top-4 right-4 bg-white text-black p-2 rounded-full z-10"
+              className="absolute top-4 right-4 button-primary text-black p-2 rounded-full z-10"
               onClick={(e) => {
                 e.stopPropagation();
                 toggleFullscreen();

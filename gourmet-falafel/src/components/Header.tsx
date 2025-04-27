@@ -1,15 +1,14 @@
 "use client"
 
 import Image from 'next/image';
-import { useState } from 'react';
-import { IoMenu } from "react-icons/io5";
+// import { useState } from 'react';
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  // const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  // const toggleMenu = () => {
+  //   setIsMenuOpen(!isMenuOpen);
+  // };
 
   return (
     <header className="sticky top-0 bg-primary z-50 shadow-md">

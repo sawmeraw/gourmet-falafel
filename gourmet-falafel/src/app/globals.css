@@ -6,7 +6,7 @@ html{
 
 :root {
   --color-primary: rgb(0, 158, 193);
-  --background-primary: #f8f0c6;
+  --background-primary: #FDFAF6;
   --foreground: #171717;
   --font-logo: 'Hidayatullah', Arial, Helvetica, sans-serif;
   --font-primary: "Candaraz", Arial, Helvetica, sans-serif;
@@ -35,13 +35,12 @@ html{
   --font-mono: var(--font-geist-mono);
 }
 
-/* @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
-    
   }
-} */
+}
 
 body {
   background: var(--background);
@@ -63,13 +62,23 @@ body {
 
 .bg-primary{
   background: var(--background-primary);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.button-primary{
+.button-primary {
   background-color: var(--color-primary);
+  cursor: pointer;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.button-primary:hover {
+  background-color: var(--color-primary);
+  opacity: 0.8;
 }
 
 .text-color-primary{
   color: var(--color-primary)
+}
+
+h2{
+  font-family: var(--font-logo);
 }

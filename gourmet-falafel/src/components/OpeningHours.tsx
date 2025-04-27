@@ -4,17 +4,17 @@ import Image from 'next/image';
 
 export default function OpeningHours() {
   const hours = [
-    { day: 'Monday', hours: '7:00 AM - 8:00 PM' },
-    { day: 'Tuesday', hours: '7:00 AM - 8:00 PM' },
-    { day: 'Wednesday', hours: '7:00 AM - 8:00 PM' },
-    { day: 'Thursday', hours: '7:00 AM - 9:00 PM' },
-    { day: 'Friday', hours: '7:00 AM - 10:00 PM' },
-    { day: 'Saturday', hours: '8:00 AM - 10:00 PM' },
-    { day: 'Sunday', hours: '9:00 AM - 6:00 PM' },
+    { day: 'Monday', hours: 'Closed' },
+    { day: 'Tuesday', hours: '7:00 AM - 5:30 PM' },
+    { day: 'Wednesday', hours: '9:00 AM - 5:30 PM' },
+    { day: 'Thursday', hours: '9:00 AM - 5:30 PM' },
+    { day: 'Friday', hours: '7:00 AM - 9:00 PM' },
+    { day: 'Saturday', hours: '7:00 AM - 3:00 PM' },
+    { day: 'Sunday', hours: 'Closed' },
   ];
 
   return (
-    <section id="hours" className="py-16 bg-gray-50">
+    <section id="hours" className="bg-primary py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row items-center lg:items-stretch gap-12">
           <div className="w-full lg:w-1/2">
@@ -38,7 +38,7 @@ export default function OpeningHours() {
               </div>
               
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-black">Hours of Operation</h2>
-              <p className="text-gray-900 mb-8 text-lg font-secondary">Visit us at your convenience. We're open every day of the week!</p>
+              <p className="text-gray-900 mb-8 text-lg font-secondary">Come visit us—we're open whenever the Central Market is buzzing with life!</p>
               
               <div className="space-y-4 font-secondary font-semibold">
                 {hours.map((item) => (
@@ -50,7 +50,7 @@ export default function OpeningHours() {
               </div>
               
               <div className="mt-10 p-4 rounded-lg border-l-4 bg-primary">
-                <p className="text-black font-medium">
+                <p className="text-black font-secondary">
                   <span className="font-bold">Holiday Hours:</span> Hours may vary on holidays and special occasions.
                 </p>
               </div>
