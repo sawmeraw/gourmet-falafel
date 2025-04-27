@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+html{
+  scroll-behavior: smooth;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@font-face {
+  font-family: 'Hidayatullah';
+  src: url('/fonts/Hidayatullah.otf');
+}
+
+@font-face {
+  font-family: 'Candarai';
+  src: url('/fonts/Candarai.ttf');
+}
+
+@font-face {
+  font-family: 'Candaraz';
+  src: url('/fonts/Candaraz.ttf');
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Candaraz', Helvetica, sans-serif;
+}
