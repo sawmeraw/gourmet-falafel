@@ -27,7 +27,7 @@ export default function Header() {
           <ul className="flex space-x-6">
             <li><a href="#hero" className="text-gray-800 hover:text-amber-600 transition-colors">Home</a></li>
             <li><a href="#menu" className="text-gray-800 hover:text-amber-600 transition-colors">Menu</a></li>
-            <li><a href="#location" className="text-gray-800 hover:text-amber-600 transition-colors">Location</a></li>
+            <li><a href="#hours" className="text-gray-800 hover:text-amber-600 transition-colors">Opening Hours</a></li>
           </ul>
         </nav>
         <div className="md:hidden relative">
@@ -62,11 +62,11 @@ export default function Header() {
                 </li>
                 <li>
                   <a 
-                    href="#location" 
+                    href="#hours"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-500 hover:text-white" 
                     onClick={toggleMenu}
                   >
-                    Location
+                    Opening Hours
                   </a>
                 </li>
               </ul>

@@ -15,27 +15,24 @@ export default function FeaturedDishes() {
     {
       id: 1,
       name: "Classic Falafel Plate",
-      image: "/dishes/falafel-plate.jpg",
+      image: "/dish/dish1.jpg",
     },
     {
       id: 2,
       name: "Mediterranean Salad",
-      image: "/dishes/mediterranean-salad.jpg",
+      image: "/dish/dish2.jpg",
     },
     {
       id: 3,
       name: "Hummus & Pita",
-      image: "/dishes/hummus-pita.jpg",
+      image: "/dish/dish3.jpg",
     }
   ];
-
-  // For handling a feature to show more details when clicking an image (optional)
-//   const [selectedDish, setSelectedDish] = useState<DishItem | null>(null);
 
   return (
     <section id="featured-dishes" className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Our Specialties</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-black">Our Specialties</h2>
         <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
           Fresh ingredients and authentic recipes for a true taste experience
         </p>
