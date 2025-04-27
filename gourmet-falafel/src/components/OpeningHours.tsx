@@ -33,8 +33,8 @@ export default function OpeningHours() {
 
           <div className="w-full lg:w-1/2 flex flex-col justify-center">
             <div className="bg-white rounded-lg shadow-lg p-8 md:p-10 relative">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500 rounded-bl-full -mt-8 -mr-8 flex items-center justify-center transform rotate-12">
-                <span className="text-white font-bold text-lg transform -rotate-12">Open</span>
+              <div className="absolute top-8 right-8 w-24 h-24 bg-amber-500 rounded-bl-full rounded-tr-lg -mt-8 -mr-8 flex items-center justify-center transform">
+                <span className="text-white font-bold text-lg transform rotate-12">Open</span>
               </div>
               
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-black">Hours of Operation</h2>
