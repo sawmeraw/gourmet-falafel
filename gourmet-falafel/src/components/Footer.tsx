@@ -11,7 +11,7 @@ export default function Footer() {
           <div className="flex flex-col items-center md:items-start">
             <div className="relative w-32 h-32 mb-4">
               <Image 
-                src="/logo.jpg" 
+                src="/logo_no_bg.png" 
                 alt="Gourmet Falafel Logo"
                 fill
                 style={{ objectFit: 'contain' }}

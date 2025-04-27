@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
-import { IoIosCloseCircleOutline } from "react-icons/io";
 
 export default function Gallery() {
   // Gallery items with better mobile-first layout
