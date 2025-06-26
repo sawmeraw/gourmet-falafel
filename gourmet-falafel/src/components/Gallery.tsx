@@ -11,7 +11,7 @@ export default function Gallery() {
       src: '/gallery/gallery1.jpg', 
       alt: 'Gallery Image 1', 
       colSpan: 'col-span-2 row-span-2 sm:col-span-2', 
-      height: 'h-48 sm:h-64 md:h-full'
+      height: 'h-full sm:h-full md:h-full'
     },
     { 
       id: 2, 
@@ -32,7 +32,7 @@ export default function Gallery() {
       src: '/gallery/gallery4.jpg', 
       alt: 'Gallery Image 4', 
       colSpan: 'col-span-2 sm:col-span-1', 
-      height: 'h-48 sm:h-64 md:h-96'
+      height: 'h-64 sm:h-64 md:h-96'
     },
     { 
       id: 5, 

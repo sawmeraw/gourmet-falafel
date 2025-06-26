@@ -80,7 +80,7 @@ export default function Menu() {
                   priority
                 />
                 <button 
-                  className="absolute bottom-4 right-4 bg-amber-600 text-white p-2 rounded-full shadow-md hover:bg-amber-700 transition-colors"
+                  className="absolute bottom-4 right-4 button-primary text-white p-2 rounded-full shadow-md transition-colors"
                   onClick={toggleFullscreen}
                   aria-label="View larger menu"
                 >
