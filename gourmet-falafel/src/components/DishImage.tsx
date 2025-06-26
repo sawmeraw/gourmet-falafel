@@ -43,7 +43,7 @@ export default function FeaturedDishes() {
               key={dish.id} 
               className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
             >
-              <div className="relative h-64">
+              <div className="relative h-96">
                 <Image
                   src={dish.image}
                   alt={dish.name}

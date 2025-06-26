@@ -14,16 +14,16 @@ export default function OpeningHours() {
   ];
 
   return (
-    <section id="hours" className="bg-primary py-16 bg-gray-50">
+    <section className="bg-primary py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row items-center lg:items-stretch gap-12">
-          <div className="w-full lg:w-1/2">
+          <div className="w-full lg:w-1/2 aspect-square">
             <div className="relative h-96 lg:h-full rounded-lg overflow-hidden shadow-xl">
               <Image
-                src="/cafe-shop.jpg"
+                src="/opening-hours.jpg"
                 alt="Cafe"
                 fill
-                style={{ objectFit: 'cover' }}
+                style={{ objectFit: "cover", objectPosition: "center 40%" }}
                 className="rounded-lg"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -31,7 +31,7 @@ export default function OpeningHours() {
           </div>
           
 
-          <div className="w-full lg:w-1/2 flex flex-col justify-center">
+          <div id="hours" className="w-full lg:w-1/2 flex flex-col justify-center">
             <div className="bg-white rounded-lg shadow-lg p-8 md:p-10 relative">
               <div className="absolute top-8 right-8 w-24 h-24 button-primary rounded-bl-full rounded-tr-lg -mt-8 -mr-8 flex items-center justify-center transform">
                 <span className="text-white font-bold text-lg transform rotate-12">Open</span>
