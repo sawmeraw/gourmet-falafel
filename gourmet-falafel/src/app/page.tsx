@@ -17,7 +17,7 @@ export default function Home() {
         <Hero />
         <LocationBanner/>
         <Menu />
-        <FeaturedDishes/>
+        {/* <FeaturedDishes/> */}
         <Gallery/>
         <OpeningHours/>
       </main>
