@@ -1,4 +1,4 @@
-import FeaturedDishes from "@/components/DishImage";
+// import FeaturedDishes from "@/components/DishImage";
 import Footer from "@/components/Footer";
 import Gallery from "@/components/Gallery";
 import Header from "@/components/Header";
@@ -17,7 +17,7 @@ export default function Home() {
         <Hero />
         <LocationBanner/>
         <Menu />
-        <FeaturedDishes/>
+        {/* <FeaturedDishes/> */}
         <Gallery/>
         <OpeningHours/>
       </main>

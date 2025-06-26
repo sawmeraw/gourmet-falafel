@@ -18,7 +18,7 @@ export default function OpeningHours() {
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row items-center lg:items-stretch gap-12">
           <div className="w-full lg:w-1/2 aspect-square">
-            <div className="relative h-96 lg:h-full rounded-lg overflow-hidden shadow-xl">
+            <div className="relative h-full lg:h-full rounded-lg overflow-hidden shadow-xl">
               <Image
                 src="/opening-hours.jpg"
                 alt="Cafe"

@@ -10,44 +10,44 @@ export default function Gallery() {
       id: 1, 
       src: '/gallery/gallery1.jpg', 
       alt: 'Gallery Image 1', 
-      colSpan: 'col-span-2 sm:col-span-2', 
-      height: 'h-48 sm:h-64 md:h-72'
+      colSpan: 'col-span-2 row-span-2 sm:col-span-2', 
+      height: 'h-full sm:h-full md:h-full'
     },
     { 
       id: 2, 
       src: '/gallery/gallery2.jpg', 
       alt: 'Gallery Image 2', 
       colSpan: 'col-span-1 sm:col-span-1', 
-      height: 'h-48 sm:h-64 md:h-72'
+      height: 'h-48 sm:h-64 md:h-80'
     },
     { 
       id: 3, 
-      src: '/gallery/gallery3.webp', 
+      src: '/gallery/gallery3.jpg', 
       alt: 'Gallery Image 3', 
       colSpan: 'col-span-1 sm:col-span-1', 
-      height: 'h-48 sm:h-64 md:h-72'
+      height: 'h-48 sm:h-64 md:h-80'
     },
     { 
       id: 4, 
       src: '/gallery/gallery4.jpg', 
       alt: 'Gallery Image 4', 
       colSpan: 'col-span-2 sm:col-span-1', 
-      height: 'h-48 sm:h-64 md:h-80'
+      height: 'h-64 sm:h-64 md:h-96'
     },
     { 
       id: 5, 
       src: '/gallery/gallery5.jpg', 
       alt: 'Gallery Image 5', 
       colSpan: 'col-span-1 sm:col-span-1', 
-      height: 'h-48 sm:h-64 md:h-80'
+      height: 'h-64 sm:h-64 md:h-96'
     },
-    { 
-      id: 6, 
-      src: '/gallery/gallery6.jpg', 
-      alt: 'Gallery Image 6', 
-      colSpan: 'col-span-1 sm:col-span-2', 
-      height: 'h-48 sm:h-64 md:h-72'
-    },
+    // { 
+    //   id: 6, 
+    //   src: '/gallery/gallery6.jpg', 
+    //   alt: 'Gallery Image 6', 
+    //   colSpan: 'col-span-1 sm:col-span-2', 
+    //   height: 'h-48 sm:h-64 md:h-96'
+    // },
     
   ];
 
