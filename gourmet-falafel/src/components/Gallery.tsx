@@ -55,10 +55,10 @@ export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
 
   return (
-    <section id="gallery" className="py-16 bg-white">
+    <section id="gallery" className="bg-primary py-16 bg-white">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-black">Gallery</h2>
-        <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+        <p className="text-center text-lg text-gray-600 mb-12 max-w-2xl mx-auto">
           Take a visual tour of our cafe and our popular dishes
         </p>
 
