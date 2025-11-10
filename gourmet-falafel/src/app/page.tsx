@@ -7,22 +7,19 @@ import LocationBanner from "@/components/LocationBanner";
 import Menu from "@/components/Menu";
 import OpeningHours from "@/components/OpeningHours";
 
-
-
 export default function Home() {
   return (
     <>
       <Header />
       <main>
         <Hero />
-        <LocationBanner/>
+        <LocationBanner />
         <Menu />
         {/* <FeaturedDishes/> */}
-        <Gallery/>
-        <OpeningHours/>
+        <Gallery />
+        <OpeningHours />
       </main>
       <Footer />
-      
     </>
   );
 }

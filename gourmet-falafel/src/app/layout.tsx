@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/effect-fade";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +18,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Gourmet Falafel",
-  description: "Experience the magic of Real Falafel! 100% SA made falafels, vegan and gluten free dishes to enjoy in our Market or takeaway",
+  description:
+    "Experience the magic of Real Falafel! 100% SA made falafels, vegan and gluten free dishes to enjoy in our Market or takeaway",
 };
 
 export default function RootLayout({
