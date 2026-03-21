@@ -1,127 +1,113 @@
 "use client"
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
-export default function Menu() {
-  const [activeMenu, setActiveMenu] = useState('breakfast');
-  const [isFullscreen, setIsFullscreen] = useState(false);
+const menus = [
+  { key: 'breakfast', label: 'Breakfast Menu', src: '/breakfast_menu.jpg' },
+  { key: 'lunch',     label: 'Lunch Menu',     src: '/lunch_menu.jpg'     },
+];
 
-  const toggleFullscreen = () => {
-    setIsFullscreen(!isFullscreen);
-  };
+export default function Menu() {
+  const [active, setActive] = useState('breakfast');
+  const [isOpen, setIsOpen] = useState(false);
+
+  const currentMenu = menus.find(m => m.key === active)!;
+
+  // Lock body scroll when lightbox is open
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
+
+  // Close on Escape
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setIsOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   return (
     <section id="menu" className="py-16 bg-primary">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-black">Our Menu</h2>
-        
+
+        {/* Tab switcher */}
         <div className="flex justify-center mb-8">
-          <div className="inline-flex rounded-md shadow-md">
-            <button
-              type="button"
-              className={`px-6 py-3 text-lg font-medium rounded-l-lg transition-colors ${
-                activeMenu === 'breakfast'
-                  ? 'button-primary text-white'
-                  : 'bg-white text-gray-700 cursor-pointer hover:bg-gray-50'
-              }`}
-              onClick={() => setActiveMenu('breakfast')}
-            >
-              Breakfast Menu
-            </button>
-            <button
-              type="button"
-              className={`px-6 py-3 text-lg font-medium rounded-r-lg transition-colors ${
-                activeMenu === 'lunch'
-                  ? 'button-primary text-white'
-                  : 'bg-white text-gray-700 cursor-pointer hover:bg-gray-50'
-              }`}
-              onClick={() => setActiveMenu('lunch')}
-            >
-              Lunch Menu
-            </button>
+          <div className="inline-flex rounded-lg shadow-md overflow-hidden">
+            {menus.map((m, i) => (
+              <button
+                key={m.key}
+                type="button"
+                onClick={() => setActive(m.key)}
+                className={`px-6 py-3 text-base font-medium transition-colors ${
+                  active === m.key
+                    ? 'button-primary text-white'
+                    : 'bg-white text-gray-700 hover:bg-gray-50'
+                } ${i === 0 ? 'rounded-l-lg' : 'rounded-r-lg'}`}
+              >
+                {m.label}
+              </button>
+            ))}
           </div>
         </div>
 
-        <div className="max-w-4xl mx-auto">
-          {activeMenu === 'breakfast' ? (
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="relative h-[32rem] md:h-[40rem] lg:h-[48rem] w-full">
-                <Image 
-                  src="/breakfast_menu.jpg" 
-                  alt="Breakfast Menu" 
-                  fill
-                  style={{ objectFit: 'contain' }}
-                  className="cursor-pointer"
-                  onClick={toggleFullscreen}
-                  priority
-                />
-                <button 
-                  className="absolute bottom-4 right-4 button-primary text-white p-2 rounded-full shadow-md hover:bg-amber-700 transition-colors"
-                  onClick={toggleFullscreen}
-                  aria-label="View larger menu"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="relative h-[32rem] md:h-[40rem] lg:h-[48rem] w-full">
-                <Image 
-                  src="/lunch_menu.jpg" 
-                  alt="Lunch Menu" 
-                  fill
-                  style={{ objectFit: 'contain' }}
-                  className="cursor-pointer"
-                  onClick={toggleFullscreen}
-                  priority
-                />
-                <button 
-                  className="absolute bottom-4 right-4 button-primary text-white p-2 rounded-full shadow-md transition-colors"
-                  onClick={toggleFullscreen}
-                  aria-label="View larger menu"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          )}
+        {/* Menu image */}
+        <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div className="relative h-[32rem] md:h-[40rem] lg:h-[48rem] w-full">
+            <Image
+              src={currentMenu.src}
+              alt={currentMenu.label}
+              fill
+              style={{ objectFit: 'contain' }}
+              className="cursor-zoom-in"
+              onClick={() => setIsOpen(true)}
+              priority
+            />
+            <button
+              onClick={() => setIsOpen(true)}
+              aria-label="View full size menu"
+              className="absolute bottom-4 right-4 bg-white/90 hover:bg-white text-gray-700 p-2.5 rounded-full shadow-md transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 
-      {isFullscreen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4"
-          onClick={toggleFullscreen}
+      {/* Lightbox — always in DOM, fades in/out */}
+      <div
+        onClick={() => setIsOpen(false)}
+        className={`fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 transition-opacity duration-300 ${
+          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        <div
+          className="relative w-full h-[90vh] max-w-5xl"
+          onClick={e => e.stopPropagation()}
         >
-          <div className="relative w-full h-[90vh] max-w-6xl">
-            <button 
-              className="absolute top-4 right-4 button-primary text-black p-2 rounded-full z-10"
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleFullscreen();
-              }}
-              aria-label="Close fullscreen view"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-            <Image
-              src={activeMenu === 'breakfast' ? '/breakfast_menu.jpg' : '/lunch_menu.jpg'}
-              alt={activeMenu === 'breakfast' ? 'Breakfast Menu' : 'Lunch Menu'}
-              fill
-              style={{ objectFit: 'contain' }}
-              priority
-            />
-          </div>
+          <Image
+            src={currentMenu.src}
+            alt={currentMenu.label}
+            fill
+            style={{ objectFit: 'contain' }}
+            priority
+          />
         </div>
-      )}
+
+        {/* Close button */}
+        <button
+          onClick={() => setIsOpen(false)}
+          aria-label="Close"
+          className="absolute top-4 right-4 w-10 h-10 bg-white/20 hover:bg-white/40 text-white rounded-full flex items-center justify-center transition-colors"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
     </section>
   );
 }
