@@ -75,7 +75,7 @@ export default function OurStory() {
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-6 mt-10">
+            <div className="flex flex-wrap gap-6 mt-10 justify-center lg:justify-start">
               <div className="text-center">
                 <p className="text-4xl font-bold text-[color:var(--color-primary)]">100%</p>
                 <p className="text-sm text-gray-500 mt-1 font-secondary">SA Made</p>

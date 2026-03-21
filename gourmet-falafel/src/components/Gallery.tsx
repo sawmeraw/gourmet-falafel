@@ -18,7 +18,7 @@ const galleryItems: GalleryItem[] = [
   { src: '/gallery/gallery_new_3.jpeg', alt: 'Falafel dish', label: '' },
   { src: '/gallery/gallery_new_4.jpeg', alt: 'Falafel dish', label: '' },
   { src: '/gallery/gallery5.jpg', alt: 'Falafel dish', label: '' },
-  { src: '/gallery/gallery_new_5.jpeg', alt: 'Falafel dish', label: 'Sandeep The Chef' },
+  { src: '/gallery/gallery_new_5.jpeg', alt: 'Falafel dish', label: '' },
 ];
 
 const AUTO_INTERVAL = 4000;
