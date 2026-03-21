@@ -1,155 +1,107 @@
 "use client";
 
-import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
+import Image from 'next/image';
+import { useState, useEffect, useCallback } from 'react';
+import { useSwipe } from '@/hooks/useSwipe';
+
+const images = [
+  { src: '/cafe1.jpg', alt: 'Cafe Interior' },
+  { src: '/cafe2.jpg', alt: 'Coffee Being Served' },
+  { src: '/cafe3.jpg', alt: 'Delicious Pastry' },
+];
+
+const AUTO_INTERVAL = 5000;
 
 export default function Hero() {
-  const images = [
-    { src: "/cafe1.jpg", id: 1, alt: "Cafe Interior" },
-    { src: "/cafe2.jpg", id: 2, alt: "Coffee Being Served" },
-    { src: "/cafe3.jpg", id: 3, alt: "Delicious Pastry" },
-  ];
+  const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const total = images.length;
+  const next = useCallback(() => setCurrent(i => (i + 1) % total), [total]);
+  const prev = useCallback(() => setCurrent(i => (i - 1 + total) % total), [total]);
+
+  const swipe = useSwipe(next, prev);
+
+  useEffect(() => {
+    if (paused) return;
+    const timer = setInterval(next, AUTO_INTERVAL);
+    return () => clearInterval(timer);
+  }, [paused, next]);
+
   return (
     <section
       id="hero"
       className="relative h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onTouchStart={swipe.onTouchStart}
+      onTouchEnd={swipe.onTouchEnd}
     >
-      <Swiper
-        className="hero-swiper h-full w-full"
-        modules={[Navigation, Pagination, Autoplay, EffectFade]}
-        effect="fade"
-        fadeEffect={{
-          crossFade: true,
-        }}
-        autoplay={{
-          delay: 5000,
-          disableOnInteraction: false,
-        }}
-        loop={true}
-        pagination={{
-          clickable: true,
-        }}
-        navigation={true}
-        slidesPerView={1}
-        spaceBetween={0}
-      >
-        {images.map((image, index) => (
-          <SwiperSlide key={image.id}>
-            {/* This <div> wrapper is important.
-                It gives the <Image> component with "fill" a relative parent
-                that is guaranteed to be 100% height of the slide.
-              */}
-            <div className="relative h-full w-full">
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                style={{ objectFit: "cover" }}
-                priority={index === 0}
-              />
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {/* Slides */}
+      {images.map((image, i) => (
+        <div
+          key={image.src}
+          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+            i === current ? 'opacity-50' : 'opacity-0'
+          }`}
+        >
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            style={{ objectFit: 'cover' }}
+            priority={i === 0}
+          />
+        </div>
+      ))}
 
-      {/* These overlays will now render *on top* of the Swiper,
-          because they are 'absolute' and the <section> is 'relative'.
-          This is the correct stacking order.
-        */}
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-40 -z-10" />
 
-      {/* Black overlay for text readability */}
-      {/*<div className="absolute inset-0 bg-black bg-opacity-40 z-10"></div>*/}
-
-      {/* Your original text content and CTA */}
-      <div className="absolute inset-0 flex flex-col justify-end z-20">
+      {/* Content */}
+      <div className="absolute inset-0 flex flex-col justify-end">
         <div className="p-8 md:p-12 lg:p-16">
           <div className="max-w-xl text-white">
-            <h1 className="logo-font text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-              Gourmet Falafel
-            </h1>
-            <p className="text-xl md:text-2xl mb-8">
-              A Bite of Tradition, A Dash of Magic
-            </p>
-            <a
-              href="#menu"
-              className="button-primary transition-colors text-white text-lg px-6 py-3 rounded-md font-semibold inline-block"
-            >
-              View Menu
-            </a>
+            <h1 className="logo-font text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Gourmet Falafel</h1>
+            <p className="text-xl md:text-2xl">A Bite of Tradition, A Dash of Magic</p>
           </div>
         </div>
+      </div>
+
+      {/* Prev button */}
+      <button
+        onClick={prev}
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors z-10"
+        aria-label="Previous slide"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      {/* Next button */}
+      <button
+        onClick={next}
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors z-10"
+        aria-label="Next slide"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+
+      {/* Dot indicators */}
+      <div className="absolute bottom-6 right-6 flex items-center gap-2">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className={`rounded-full transition-all duration-300 ${
+              i === current ? 'w-5 h-2 bg-white' : 'w-2 h-2 bg-white/50'
+            }`}
+            aria-label={`Go to slide ${i + 1}`}
+          />
+        ))}
       </div>
     </section>
   );
 }
-//   const [currentIndex, setCurrentIndex] = useState(0);
-
-//   useEffect(() => {
-//     const interval = setInterval(() => {
-//       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-//     }, 5000);
-//     return () => clearInterval(interval);
-//   }, [images.length]);
-
-//   return (
-//     <section
-//       id="hero"
-//       className="relative h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden"
-//     >
-//       {images.map((image, index) => (
-//         <>
-//           <div
-//             key={image.id}
-//             className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-//               index === currentIndex ? "opacity-50" : "opacity-0"
-//             }`}
-//           >
-//             <Image
-//               src={image.src}
-//               alt={image.alt}
-//               fill
-//               style={{ objectFit: "cover" }}
-//               priority={index === 0}
-//             />
-//           </div>
-//         </>
-//       ))}
-
-//       <div className="absolute inset-0 bg-black bg-opacity-40 -z-10"></div>
-//       <div className="absolute inset-0 flex flex-col justify-end">
-//         <div className="p-8 md:p-12 lg:p-16">
-//           <div className="max-w-xl text-white">
-//             <h1 className="logo-font text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-//               Gourmet Falafel
-//             </h1>
-//             <p className="text-xl md:text-2xl mb-8">
-//               A Bite of Tradition, A Dash of Magic
-//             </p>
-//             <a
-//               href="#menu"
-//               className="button-primary transition-colors text-white text-lg px-6 py-3 rounded-md font-semibold inline-block"
-//             >
-//               View Menu
-//             </a>
-//           </div>
-//         </div>
-//       </div>
-
-//       <div className="absolute bottom-6 right-6 flex space-x-2">
-//         {images.map((_, index) => (
-//           <button
-//             key={index}
-//             className={`w-3 h-3 rounded-full ${
-//               index === currentIndex
-//                 ? "button-primary"
-//                 : "bg-white bg-opacity-50"
-//             }`}
-//             onClick={() => setCurrentIndex(index)}
-//             aria-label={`Go to slide ${index + 1}`}
-//           />
-//         ))}
-//       </div>
-//     </section>
-//   );
-// }

@@ -1,129 +1,173 @@
 "use client"
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useSwipe } from '@/hooks/useSwipe';
+
+interface GalleryItem {
+  src: string;
+  alt: string;
+  label?: string;
+}
+
+// Add new images here — label is optional
+const galleryItems: GalleryItem[] = [
+  { src: '/gallery/gallery_new_1.jpeg', alt: 'Falafel dish', label: '' },
+  { src: '/gallery/gallery2.jpg', alt: 'Falafel dish', label: '' },
+  { src: '/gallery/gallery_new_2.jpeg', alt: 'Falafel dish', label: '' },
+  { src: '/gallery/gallery_new_3.jpeg', alt: 'Falafel dish', label: '' },
+  { src: '/gallery/gallery_new_4.jpeg', alt: 'Falafel dish', label: '' },
+  { src: '/gallery/gallery5.jpg', alt: 'Falafel dish', label: '' },
+  { src: '/gallery/gallery_new_5.jpeg', alt: 'Falafel dish', label: 'Sandeep The Chef' },
+];
+
+const AUTO_INTERVAL = 4000;
 
 export default function Gallery() {
-  // Gallery items with better mobile-first layout
-  const galleryItems = [
-    { 
-      id: 1, 
-      src: '/gallery/gallery1.jpg', 
-      alt: 'Gallery Image 1', 
-      colSpan: 'col-span-2 row-span-2 sm:col-span-2', 
-      height: 'h-full sm:h-full md:h-full'
-    },
-    { 
-      id: 2, 
-      src: '/gallery/gallery2.jpg', 
-      alt: 'Gallery Image 2', 
-      colSpan: 'col-span-1 sm:col-span-1', 
-      height: 'h-48 sm:h-64 md:h-80'
-    },
-    { 
-      id: 3, 
-      src: '/gallery/gallery3.jpg', 
-      alt: 'Gallery Image 3', 
-      colSpan: 'col-span-1 sm:col-span-1', 
-      height: 'h-48 sm:h-64 md:h-80'
-    },
-    { 
-      id: 4, 
-      src: '/gallery/gallery4.jpg', 
-      alt: 'Gallery Image 4', 
-      colSpan: 'col-span-2 sm:col-span-1', 
-      height: 'h-64 sm:h-64 md:h-96'
-    },
-    { 
-      id: 5, 
-      src: '/gallery/gallery5.jpg', 
-      alt: 'Gallery Image 5', 
-      colSpan: 'col-span-1 sm:col-span-1', 
-      height: 'h-64 sm:h-64 md:h-96'
-    },
-    // { 
-    //   id: 6, 
-    //   src: '/gallery/gallery6.jpg', 
-    //   alt: 'Gallery Image 6', 
-    //   colSpan: 'col-span-1 sm:col-span-2', 
-    //   height: 'h-48 sm:h-64 md:h-96'
-    // },
-    
-  ];
+  const [index, setIndex] = useState(0);
+  const [animate, setAnimate] = useState(true);
+  const [paused, setPaused] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(3);
 
-  // For lightbox functionality
-  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const total = galleryItems.length;
+
+  // Responsive visible count
+  useEffect(() => {
+    const update = () => setVisibleCount(window.innerWidth < 640 ? 1 : window.innerWidth < 1024 ? 2 : 3);
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
+  // Clone first N items at the end for seamless forward looping
+  const items = [...galleryItems, ...galleryItems.slice(0, visibleCount)];
+
+  const next = useCallback(() => {
+    setAnimate(true);
+    setIndex(i => i + 1);
+  }, []);
+
+  const prev = useCallback(() => {
+    if (index === 0) {
+      setAnimate(false);
+      setIndex(total - visibleCount);
+    } else {
+      setAnimate(true);
+      setIndex(i => i - 1);
+    }
+  }, [index, total, visibleCount]);
+
+  // Auto-advance
+  useEffect(() => {
+    if (paused) return;
+    const timer = setInterval(next, AUTO_INTERVAL);
+    return () => clearInterval(timer);
+  }, [paused, next]);
+
+  // Re-enable animation after snap
+  useEffect(() => {
+    if (!animate) {
+      const raf = requestAnimationFrame(() => requestAnimationFrame(() => setAnimate(true)));
+      return () => cancelAnimationFrame(raf);
+    }
+  }, [animate]);
+
+  // After transition ends, snap back if we're in the cloned zone.
+  // Guard against bubbled transitionend events from child elements (e.g. image hover scale).
+  const handleTransitionEnd = (e: React.TransitionEvent) => {
+    if (e.target !== e.currentTarget) return;
+    if (index >= total) {
+      setAnimate(false);
+      setIndex(0);
+    }
+  };
+
+  const translateX = -(index * (100 / visibleCount));
+  const swipe = useSwipe(next, prev);
 
   return (
-    <section id="gallery" className="bg-primary py-16 bg-white">
+    <section id="gallery" className="py-16 bg-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-black">Gallery</h2>
-        <p className="text-center text-lg text-gray-600 mb-12 max-w-2xl mx-auto">
-          Take a visual tour of our cafe and our popular dishes
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-black">Gallery</h2>
+        <p className="text-center text-lg text-gray-600 mb-10 max-w-2xl mx-auto">
+          Take a visual tour of our popular dishes
         </p>
 
-        {/* 3-column grid on mobile, 3-column on tablet, 4-column on desktop */}
-        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-2 md:gap-4">
-          {galleryItems.map((item) => (
-            <div 
-              key={item.id} 
-              className={`${item.colSpan} overflow-hidden rounded-lg shadow-md`}
-              onClick={() => setSelectedImage(item.id)}
-            >
-              <div className={`relative w-full ${item.height} transition-transform duration-300 hover:scale-105 cursor-pointer`}>
-                <Image
-                  src={item.src}
-                  alt={item.alt}
-                  fill
-                  style={{ objectFit: 'cover' }}
-                  className="transition-transform duration-500 hover:scale-110"
-                />
+        <div
+          className="relative overflow-hidden rounded-2xl"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onTouchStart={swipe.onTouchStart}
+          onTouchEnd={swipe.onTouchEnd}
+        >
+          {/* Slider strip */}
+          <div
+            className="flex"
+            style={{
+              transform: `translateX(${translateX}%)`,
+              transition: animate ? 'transform 600ms ease-in-out' : 'none',
+            }}
+            onTransitionEnd={handleTransitionEnd}
+          >
+            {items.map((item, i) => (
+              <div
+                key={i}
+                className="flex-shrink-0 px-1"
+                style={{ width: `${100 / visibleCount}%` }}
+              >
+                <div className="relative aspect-square sm:aspect-auto sm:h-72 md:h-96 rounded-xl overflow-hidden group">
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    style={{ objectFit: 'cover' }}
+                    className="transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {item.label && (
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent px-4 py-3">
+                      <p className="text-white font-semibold text-sm tracking-wide">{item.label}</p>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            ))}
+          </div>
+
+          {/* Prev button */}
+          <button
+            onClick={prev}
+            className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center shadow-md transition-colors z-10"
+            aria-label="Previous"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          {/* Next button */}
+          <button
+            onClick={next}
+            className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full w-10 h-10 flex items-center justify-center shadow-md transition-colors z-10"
+            aria-label="Next"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Dot indicators */}
+        <div className="flex justify-center gap-2 mt-5">
+          {galleryItems.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => { setAnimate(true); setIndex(i); }}
+              className={`rounded-full transition-all duration-300 ${i === index % total ? 'w-5 h-2 bg-gray-700' : 'w-2 h-2 bg-gray-300'}`}
+              aria-label={`Go to slide ${i + 1}`}
+            />
           ))}
         </div>
       </div>
-
-      {/* Lightbox */}
-      {selectedImage && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4"
-          onClick={() => setSelectedImage(null)}
-        >
-          <div className="relative max-w-4xl max-h-[90vh] w-full h-[80vh]">
-            {/* <button 
-              className="absolute -top-10 right-0.5 px-2 py-2 text-xl bg-white bg-opacity-50 w-10 h-10 rounded-full flex items-center justify-center z-10"
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedImage(null);
-              }}
-            >
-              <IoIosCloseCircleOutline size={45} fill='red' />
-            </button> */}
-            <button 
-              className="absolute top-4 right-4 bg-white text-black p-2 rounded-full z-10"
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedImage(null);
-              }}
-              aria-label="Close fullscreen view"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-            <div className="relative w-full h-full">
-              <Image
-                src={galleryItems.find(item => item.id === selectedImage)?.src || ''}
-                alt={galleryItems.find(item => item.id === selectedImage)?.alt || ''}
-                fill
-                style={{ objectFit: 'contain' }}
-                priority
-              />
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
