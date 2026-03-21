@@ -12,16 +12,17 @@ interface GalleryItem {
 
 // Add new images here — label is optional
 const galleryItems: GalleryItem[] = [
-  { src: '/gallery/gallery_new_1.jpeg', alt: 'Falafel dish', label: '' },
-  { src: '/gallery/gallery2.jpg', alt: 'Falafel dish', label: '' },
-  { src: '/gallery/gallery_new_2.jpeg', alt: 'Falafel dish', label: '' },
-  { src: '/gallery/gallery_new_3.jpeg', alt: 'Falafel dish', label: '' },
+  { src: '/gallery/sabich_bowl.jpeg', alt: 'Sabich Bowl', label: 'Sabich Bowl' },
+  { src: '/gallery/falafel_breakfast.jpeg', alt: 'Falafel dish', label: 'Falafel Bowl Breakfast' },
+  { src: '/gallery/baked_shakshuka.jpeg', alt: 'Baked Shakshuka', label: 'Baked Shakshuka' },
   { src: '/gallery/gallery_new_4.jpeg', alt: 'Falafel dish', label: '' },
-  { src: '/gallery/gallery5.jpg', alt: 'Falafel dish', label: '' },
-  { src: '/gallery/gallery_new_5.jpeg', alt: 'Falafel dish', label: '' },
+  { src: '/gallery/gallery_new_5.jpeg', alt: 'Halloumi Heaven Breakfast', label: 'Halloumi Heaven Breakfast' },
+  { src: '/gallery/gallery_new_6.jpg', alt: 'Falafel dish', label: '' },
+  { src: '/gallery/gallery_new_7.jpg', alt: 'Falafel dish', label: '' },
+  { src: '/gallery/gallery_new_8.jpg', alt: 'Falafel dish', label: '' },
 ];
 
-const AUTO_INTERVAL = 4000;
+const AUTO_INTERVAL = 3000;
 
 export default function Gallery() {
   const [index, setIndex] = useState(0);
@@ -115,7 +116,7 @@ export default function Gallery() {
                 className="flex-shrink-0 px-1"
                 style={{ width: `${100 / visibleCount}%` }}
               >
-                <div className="relative aspect-square sm:aspect-auto sm:h-72 md:h-96 rounded-xl overflow-hidden group">
+                <div className="relative aspect-square sm:aspect-auto sm:h-80 md:h-[28rem] lg:h-[32rem] rounded-xl overflow-hidden group">
                   <Image
                     src={item.src}
                     alt={item.alt}
@@ -124,8 +125,8 @@ export default function Gallery() {
                     className="transition-transform duration-500 group-hover:scale-105"
                   />
                   {item.label && (
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent px-4 py-3">
-                      <p className="text-white font-semibold text-sm tracking-wide">{item.label}</p>
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent px-5 py-4">
+                      <p className="text-white font-semibold text-base md:text-lg tracking-wide">{item.label}</p>
                     </div>
                   )}
                 </div>

@@ -13,7 +13,7 @@ const locations = [
     key: 'acm',
     address: '44-60 Gouger St',
     hours: [
-      { open: null,    close: null    }, // Monday   – closed
+      { open: '09:00',    close: '14:00'    }, // Monday   – closed
       { open: '07:00', close: '17:30' }, // Tuesday
       { open: '09:00', close: '17:30' }, // Wednesday
       { open: '09:00', close: '17:30' }, // Thursday

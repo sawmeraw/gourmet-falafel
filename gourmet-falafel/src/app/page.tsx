@@ -20,8 +20,8 @@ export default function Home() {
         <Menu />
         <FeaturedDishes />
         <OurStory />
-        <Testimonials />
         <Gallery />
+        <Testimonials />
         <OpeningHours />
       </main>
       <Footer />
