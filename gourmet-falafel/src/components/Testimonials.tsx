@@ -47,19 +47,19 @@ export default function Testimonials() {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-2">Loved by Adelaide</h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
           {reviews.map((review) => (
-            <div key={review.name} className="bg-white rounded-2xl p-6 shadow-sm flex flex-col gap-4">
+            <div key={review.name} className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm flex flex-col gap-3 sm:gap-4">
               <Stars count={review.stars} />
-              <p className="text-gray-600 font-secondary text-sm leading-relaxed flex-1">
+              <p className="hidden sm:block text-gray-600 font-secondary text-sm leading-relaxed flex-1">
                 &ldquo;{review.text}&rdquo;
               </p>
-              <div className="border-t border-gray-100 pt-4 flex items-center justify-between">
+              <div className="sm:border-t sm:border-gray-100 sm:pt-4 flex items-center justify-between">
                 <div>
                   <p className="text-sm font-semibold text-gray-800">{review.name}</p>
                   <p className="text-xs text-gray-400 font-secondary">{review.source}</p>
                 </div>
-                <svg className="w-5 h-5 text-gray-300" viewBox="0 0 24 24" fill="currentColor">
+                <svg className="hidden sm:block w-5 h-5 text-gray-300" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
                 </svg>
               </div>

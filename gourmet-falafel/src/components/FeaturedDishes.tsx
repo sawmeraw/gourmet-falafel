@@ -32,7 +32,7 @@ export default function FeaturedDishes() {
           <span className="text-[color:var(--color-primary)] text-sm font-semibold tracking-widest uppercase">Fresh Every Day</span>
           <h2 className="text-4xl md:text-5xl font-bold text-white mt-2">Our Most Popular Dishes</h2>
           <p className="text-gray-400 mt-4 text-lg max-w-xl mx-auto font-secondary">
-            Made from scratch with 100% South Australian ingredients — no shortcuts, ever.
+            Made from scratch with 100% South Australian ingredients.
           </p>
         </div>
 

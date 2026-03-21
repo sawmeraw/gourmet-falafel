@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
 const images = [
-  { src: '/cafe-shop.jpg',      alt: 'Gourmet Falafel kitchen' },
+  // { src: '/cafe-shop.jpg',      alt: 'Gourmet Falafel kitchen' },
   { src: '/opening-hours.jpg',  alt: 'Gourmet Falafel store' },
 ];
 
@@ -12,6 +12,7 @@ export default function OurStory() {
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
+    if (images.length <= 1) return;
     const timer = setInterval(() => setCurrent(i => (i + 1) % images.length), 4000);
     return () => clearInterval(timer);
   }, []);
@@ -23,7 +24,7 @@ export default function OurStory() {
 
           {/* Auto-swiper image */}
           <div className="w-full lg:w-1/2 flex-shrink-0">
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
+            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl">
               {images.map((img, i) => (
                 <div
                   key={img.src}
@@ -65,10 +66,10 @@ export default function OurStory() {
 
             <div className="space-y-4 font-secondary text-gray-600 text-lg leading-relaxed">
               <p>
-                Gourmet Falafel was born out of a simple belief — that real food, made with real ingredients, should be available to everyone. Our falafels are crafted fresh every single day using a recipe passed down through generations, brought to the heart of Adelaide.
+                Gourmet Falafel was born out of a simple belief that real food, made with real ingredients, should be available to everyone. Our falafels are crafted fresh every single day using a recipe passed down through generations, brought to the heart of Adelaide.
               </p>
               <p>
-                We set up at the Adelaide Central Market and Adelaide Central Plaza because we wanted to be where the community is — where locals shop, where families gather, and where great food finds its people.
+                We set up at the Adelaide Central Market and Adelaide Central Plaza because we wanted to be where the community is, where locals shop, where families gather, and where great food finds its people.
               </p>
               <p>
                 Every bite is 100% South Australian made. No preservatives. No shortcuts. Just honest, flavourful food you can feel good about.
