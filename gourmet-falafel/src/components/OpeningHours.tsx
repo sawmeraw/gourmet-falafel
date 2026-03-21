@@ -24,14 +24,14 @@ const locations = [
   },
   {
     key: 'acp',
-    address: '100 Rundle Mall',
+    address: 'Shop 21, Lower Ground Level',
     // Update these hours to match actual ACP trading hours
     hours: [
-      { open: '09:00', close: '17:30' }, // Monday
-      { open: '09:00', close: '17:30' }, // Tuesday
-      { open: '09:00', close: '17:30' }, // Wednesday
-      { open: '09:00', close: '21:00' }, // Thursday
-      { open: '09:00', close: '21:00' }, // Friday
+      { open: '09:00', close: '17:00' }, // Monday
+      { open: '09:00', close: '17:00' }, // Tuesday
+      { open: '09:00', close: '17:00' }, // Wednesday
+      { open: '09:00', close: '17:00' }, // Thursday
+      { open: '09:00', close: '20:00' }, // Friday
       { open: '09:00', close: '17:00' }, // Saturday
       { open: '11:00', close: '17:00' }, // Sunday
     ],
