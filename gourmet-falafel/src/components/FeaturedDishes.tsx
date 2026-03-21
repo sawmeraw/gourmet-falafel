@@ -4,21 +4,21 @@ import Image from 'next/image';
 
 const dishes = [
   {
-    src: '/dish/dish1.jpg',
-    name: 'Falafel Plate',
-    description: 'Our signature crispy falafels served with creamy hummus, fresh tabbouleh and warm pita — the full Gourmet experience on one plate.',
+    src: '/featured/falafel_breakfast.jpg',
+    name: 'Falafel Breakfast',
+    description: 'Our signature crispy falafels served with creamy hummus, fresh tabbouleh and warm pita, the full Gourmet experience on one plate.',
     tag: 'Fan Favourite',
   },
   {
-    src: '/dish/dish2.jpg',
+    src: '/featured/halloumi_heaven.jpg',
     name: 'Falafel Wrap',
     description: 'House-made falafels rolled in a soft pita with tahini, pickles, tomato and fresh greens. Simple, satisfying, and absolutely packed.',
     tag: 'Most Ordered',
   },
   {
-    src: '/dish/dish3.jpg',
-    name: 'Mixed Bowl',
-    description: 'A generous bowl with falafel, grilled veg, fresh salad and your choice of sauces — fully vegan, fully loaded, fully delicious.',
+    src: '/featured/sabich_bowl.jpg',
+    name: 'Sabich Bowl',
+    description: 'A generous bowl with falafel, grilled veg, fresh salad and your choice of sauces. Fully vegan, fully loaded, fully delicious.',
     tag: 'Vegan & GF',
   },
 ];
