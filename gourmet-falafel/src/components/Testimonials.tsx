@@ -43,7 +43,7 @@ export default function Testimonials() {
       <div className="container mx-auto">
 
         <div className="text-center mb-12">
-          <span className="text-[color:var(--color-primary)] text-sm font-semibold tracking-widest uppercase">What People Say</span>
+          <span className="hidden sm:inline text-[color:var(--color-primary)] text-sm font-semibold tracking-widest uppercase">What People Say</span>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-2">Loved by Adelaide</h2>
         </div>
 
