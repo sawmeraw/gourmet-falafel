@@ -16,7 +16,7 @@ const galleryItems: GalleryItem[] = [
   { src: '/gallery/falafel_breakfast.jpeg', alt: 'Falafel dish', label: 'Falafel Bowl Breakfast' },
   { src: '/gallery/baked_shakshuka.jpeg', alt: 'Baked Shakshuka', label: 'Baked Shakshuka' },
   { src: '/gallery/gallery_new_4.jpeg', alt: 'Falafel dish', label: '' },
-  { src: '/gallery/gallery_new_5.jpeg', alt: 'Halloumi Heaven Breakfast', label: 'Halloumi Heaven Breakfast' },
+  { src: '/gallery/halloumi_heaven_breakfast.jpeg', alt: 'Halloumi Heaven Breakfast', label: 'Halloumi Heaven Breakfast' },
   { src: '/gallery/gallery_new_6.jpg', alt: 'Falafel dish', label: '' },
   { src: '/gallery/gallery_new_7.jpg', alt: 'Falafel dish', label: '' },
   { src: '/gallery/gallery_new_8.jpg', alt: 'Falafel dish', label: '' },
