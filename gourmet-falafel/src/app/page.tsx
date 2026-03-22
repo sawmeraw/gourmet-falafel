@@ -1,3 +1,4 @@
+import DeliveryPlatforms from "@/components/DeliveryPlatforms";
 import FeaturedDishes from "@/components/FeaturedDishes";
 import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
@@ -23,6 +24,7 @@ export default function Home() {
         <Gallery />
         <Testimonials />
         <OpeningHours />
+        <DeliveryPlatforms />
       </main>
       <Footer />
       <FloatingActions />
