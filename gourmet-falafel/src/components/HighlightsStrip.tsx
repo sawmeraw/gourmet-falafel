@@ -1,46 +1,78 @@
 "use client"
 
-import { IoLeafOutline, IoShieldCheckmarkOutline, IoStarOutline, IoHeartOutline, IoStorefrontOutline, IoFlowerOutline } from 'react-icons/io5';
+import Image from 'next/image';
 
 const highlights = [
-  { icon: IoLeafOutline,            text: '100% Vegan Options' },
-  { icon: IoShieldCheckmarkOutline, text: 'Gluten Free' },
-  { icon: IoStarOutline,            text: 'SA Made' },
-  { icon: IoFlowerOutline,          text: 'Freshly Made Daily' },
-  { icon: IoLeafOutline,            text: 'No Preservatives' },
-  { icon: IoHeartOutline,           text: 'Family Owned' },
-  { icon: IoStorefrontOutline,      text: 'Market Fresh' },
+  'Fully Vegan',
+  'Gluten Free',
+  'SA Made',
+  'Freshly Made Daily',
+  'No Preservatives',
+  'Family Owned',
+  'Market Fresh',
 ];
 
-// Duplicate for seamless infinite scroll
-const items = [...highlights, ...highlights];
+function Ball() {
+  return (
+    <Image
+      src="/misc/falafel_ball.png"
+      alt=""
+      width={22}
+      height={22}
+      className="rounded-full flex-shrink-0 shadow-sm"
+      aria-hidden="true"
+    />
+  );
+}
+
+// One full unit: all highlight items with ball separators + illustration mid-way
+function Unit() {
+  return (
+    <div className="flex items-center flex-shrink-0">
+      {highlights.map((text, i) => (
+        <div key={i} className="flex items-center flex-shrink-0">
+          <span className="text-gray-700 font-semibold text-sm tracking-wide whitespace-nowrap select-none px-5">
+            {text}
+          </span>
+          {i === 2 ? (
+            // Illustration in the middle of each loop
+            <Image
+              src="/misc/falafel_2d_350w.png"
+              alt=""
+              width={52}
+              height={52}
+              className="flex-shrink-0 mx-2"
+              aria-hidden="true"
+            />
+          ) : (
+            <Ball />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function HighlightsStrip() {
   return (
-    <div className="bg-primary border-y border-gray-200 py-4 overflow-hidden">
+    <div className="bg-primary border-y border-gray-100 py-2 overflow-hidden">
       <style>{`
-        @keyframes marquee {
+        @keyframes highlights-scroll {
           0%   { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          100% { transform: translateX(-33.3333%); }
         }
-        .marquee-track {
-          animation: marquee 24s linear infinite;
+        .highlights-track {
+          animation: highlights-scroll 30s linear infinite;
         }
-        .marquee-track:hover {
+        .highlights-track:hover {
           animation-play-state: paused;
         }
       `}</style>
-
-      <div className="marquee-track flex items-center gap-6 w-max">
-        {items.map((item, i) => (
-          <div key={i} className="flex items-center gap-6 flex-shrink-0">
-            <div className="flex items-center gap-2.5 bg-white border border-gray-200 rounded-full px-5 py-2 shadow-sm select-none">
-              <item.icon size={15} className="text-[color:var(--color-primary)] flex-shrink-0" />
-              <span className="text-sm font-semibold text-gray-700 whitespace-nowrap">{item.text}</span>
-            </div>
-            <span className="text-gray-300 select-none">·</span>
-          </div>
-        ))}
+      {/* 3 copies — animating -33.33% moves exactly one copy width, loops seamlessly */}
+      <div className="highlights-track flex items-center w-max">
+        <Unit />
+        <Unit />
+        <Unit />
       </div>
     </div>
   );

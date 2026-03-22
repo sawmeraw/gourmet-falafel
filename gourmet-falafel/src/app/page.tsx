@@ -10,6 +10,7 @@ import Menu from "@/components/Menu";
 import OpeningHours from "@/components/OpeningHours";
 import OurStory from "@/components/OurStory";
 import Testimonials from "@/components/Testimonials";
+import TileDivider from "@/components/TileDivider";
 
 export default function Home() {
   return (
@@ -20,9 +21,11 @@ export default function Home() {
         <HighlightsStrip />
         <Menu />
         <FeaturedDishes />
+        <TileDivider height={36} />
         <OurStory />
         <Gallery />
         <Testimonials />
+        <TileDivider height={36} />
         <OpeningHours />
         <DeliveryPlatforms />
       </main>

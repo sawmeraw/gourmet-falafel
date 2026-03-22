@@ -36,6 +36,14 @@ export default function Hero() {
       onTouchStart={swipe.onTouchStart}
       onTouchEnd={swipe.onTouchEnd}
     >
+      <style>{`
+        @keyframes hero-float {
+          0%, 100% { transform: translateY(0px) rotate(-2deg); }
+          50%       { transform: translateY(-12px) rotate(-2deg); }
+        }
+        .hero-float { animation: hero-float 4s ease-in-out infinite; }
+      `}</style>
+
       {/* Slides */}
       {images.map((image, i) => (
         <div
@@ -63,6 +71,21 @@ export default function Hero() {
           <div className="max-w-xl text-white">
             <h1 className="logo-font text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Gourmet Falafel</h1>
             <p className="text-xl md:text-2xl">A Bite of Tradition, A Dash of Magic</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Floating falafel bowl — desktop only */}
+      <div className="absolute right-20 top-1/2 -translate-y-1/2 hidden lg:block z-10 pointer-events-none">
+        <div className="hero-float">
+          <div className="bg-white rounded-3xl p-4 shadow-2xl">
+            <Image
+              src="/misc/bowl_animated.png"
+              alt="Falafel Bowl"
+              width={160}
+              height={160}
+              className="block"
+            />
           </div>
         </div>
       </div>
