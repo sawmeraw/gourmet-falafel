@@ -59,23 +59,14 @@ export default function Menu() {
               type="button"
               onClick={() => switchMenu(m.key)}
               aria-pressed={active === m.key}
-              className={`group relative overflow-hidden flex-1 rounded-xl h-16 transition-all duration-300 cursor-pointer ${
+              className={`flex-1 rounded-xl h-16 flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer border ${
                 active === m.key
-                  ? 'ring-2 ring-[color:var(--color-primary)] scale-[1.04] shadow-lg shadow-black/40'
-                  : 'opacity-50 hover:opacity-70 hover:scale-[1.02]'
+                  ? 'bg-white border-[color:var(--color-primary)] shadow-sm'
+                  : 'bg-white/50 border-gray-200 opacity-60 hover:opacity-80'
               }`}
             >
-              <Image
-                src={m.src}
-                alt={m.label}
-                fill
-                style={{ objectFit: 'cover' }}
-                className="scale-110 blur-sm brightness-[0.15]"
-              />
-              <div className="absolute inset-0 flex items-center justify-center gap-2">
-                <m.Icon size={15} className="text-[color:var(--color-primary)]" />
-                <span className="text-white font-bold text-sm tracking-wide">{m.label}</span>
-              </div>
+              <m.Icon size={15} className="text-[color:var(--color-primary)]" />
+              <span className="text-gray-700 font-semibold text-sm tracking-wide">{m.label}</span>
             </button>
           ))}
         </div>

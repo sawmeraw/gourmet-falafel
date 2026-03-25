@@ -19,8 +19,8 @@ export default function Home() {
       <main>
         <Hero />
         <HighlightsStrip />
-        <Menu />
         <FeaturedDishes />
+        <Menu />
         <TileDivider height={36} />
         <OurStory />
         <Gallery />

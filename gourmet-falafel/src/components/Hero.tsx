@@ -83,7 +83,23 @@ export default function Hero() {
         <div className="p-8 md:p-12 lg:p-16">
           <div className="max-w-xl text-white">
             <h1 className="logo-font text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Gourmet Falafel</h1>
-            <p className="text-xl md:text-2xl">A Bite of Tradition, A Dash of Magic</p>
+            <p className="text-xl md:text-2xl mb-8">A Bite of Tradition, A Dash of Magic</p>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="#menu"
+                className="px-6 py-3 bg-white text-gray-800 font-semibold rounded-full text-sm hover:bg-gray-100 transition-colors"
+              >
+                View Menu
+              </a>
+              <a
+                href="https://www.ubereats.com/au/store/gourmet-falafel-rundle-mall/vTZ-NAi8V2meSPyayeQqiw"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 bg-[color:var(--color-primary)] text-white font-semibold rounded-full text-sm hover:opacity-90 transition-opacity"
+              >
+                Order Online
+              </a>
+            </div>
           </div>
         </div>
       </div>

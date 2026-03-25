@@ -31,22 +31,12 @@ function Unit() {
     <div className="flex items-center flex-shrink-0">
       {highlights.map((text, i) => (
         <div key={i} className="flex items-center flex-shrink-0">
-          <span className="text-gray-700 font-semibold text-sm tracking-wide whitespace-nowrap select-none px-5">
+          <span className="text-gray-300 font-semibold text-sm tracking-wide whitespace-nowrap select-none px-5">
             {text}
           </span>
-          {i === 2 ? (
-            // Illustration in the middle of each loop
-            <Image
-              src="/misc/falafel_2d_350w.png"
-              alt=""
-              width={52}
-              height={52}
-              className="flex-shrink-0 mx-2"
-              aria-hidden="true"
-            />
-          ) : (
+          {
             <Ball />
-          )}
+          }
         </div>
       ))}
     </div>
@@ -55,7 +45,7 @@ function Unit() {
 
 export default function HighlightsStrip() {
   return (
-    <div className="bg-primary border-y border-gray-100 py-2 overflow-hidden">
+    <div className="bg-[#111] border-y border-gray-800 py-2 overflow-hidden">
       <style>{`
         @keyframes highlights-scroll {
           0%   { transform: translateX(0); }
