@@ -25,7 +25,7 @@ const platforms = [
 
 export default function DeliveryPlatforms() {
   return (
-    <section className="bg-white py-16 border-t border-gray-100">
+    <section id="order-online" className="bg-white py-16 border-t border-gray-100">
       <div className="container mx-auto px-4">
 
         <div className="text-center mb-10">

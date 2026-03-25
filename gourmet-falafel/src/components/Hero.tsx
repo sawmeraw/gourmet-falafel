@@ -92,9 +92,7 @@ export default function Hero() {
                 View Menu
               </a>
               <a
-                href="https://www.ubereats.com/au/store/gourmet-falafel-rundle-mall/vTZ-NAi8V2meSPyayeQqiw"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#order-online"
                 className="px-6 py-3 bg-[color:var(--color-primary)] text-white font-semibold rounded-full text-sm hover:opacity-90 transition-opacity"
               >
                 Order Online
