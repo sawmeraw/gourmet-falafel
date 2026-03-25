@@ -5,9 +5,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { useSwipe } from '@/hooks/useSwipe';
 
 const images = [
-  { src: '/cafe1.jpg', alt: 'Cafe Interior' },
-  { src: '/cafe2.jpg', alt: 'Coffee Being Served' },
-  { src: '/cafe3.jpg', alt: 'Delicious Pastry' },
+  { src: '/cafe1.jpg', alt: 'ACM Shop' },
+  { src: '/shop_acm.jpg', alt: 'ACM Shop' },
+  { src: '/dish_platter.jpg', alt: 'Dish Platter' },
 ];
 
 const AUTO_INTERVAL = 5000;
@@ -15,6 +15,7 @@ const AUTO_INTERVAL = 5000;
 export default function Hero() {
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [videoEnded, setVideoEnded] = useState(false);
   const total = images.length;
   const next = useCallback(() => setCurrent(i => (i + 1) % total), [total]);
   const prev = useCallback(() => setCurrent(i => (i - 1 + total) % total), [total]);
@@ -44,13 +45,25 @@ export default function Hero() {
         .hero-float { animation: hero-float 4s ease-in-out infinite; }
       `}</style>
 
-      {/* Slides */}
+      {/* Mobile video background — plays once, then hands off to slider */}
+      {!videoEnded && (
+        <video
+          className="absolute inset-0 w-full h-full object-cover opacity-50 md:hidden"
+          src="/media/trailer_mobile.mp4"
+          autoPlay
+          muted
+          playsInline
+          onEnded={() => setVideoEnded(true)}
+        />
+      )}
+
+      {/* Slides — always on desktop, on mobile only after video ends */}
       {images.map((image, i) => (
         <div
           key={image.src}
           className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-            i === current ? 'opacity-50' : 'opacity-0'
-          }`}
+            videoEnded ? '' : 'hidden md:block'
+          } ${i === current ? 'opacity-50' : 'opacity-0'}`}
         >
           <Image
             src={image.src}
@@ -93,7 +106,7 @@ export default function Hero() {
       {/* Prev button */}
       <button
         onClick={prev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors z-10"
+        className={`absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white rounded-full w-10 h-10 ${videoEnded ? 'flex' : 'hidden md:flex'} items-center justify-center transition-colors z-10`}
         aria-label="Previous slide"
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -104,7 +117,7 @@ export default function Hero() {
       {/* Next button */}
       <button
         onClick={next}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors z-10"
+        className={`absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white rounded-full w-10 h-10 ${videoEnded ? 'flex' : 'hidden md:flex'} items-center justify-center transition-colors z-10`}
         aria-label="Next slide"
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -113,7 +126,7 @@ export default function Hero() {
       </button>
 
       {/* Dot indicators */}
-      <div className="absolute bottom-6 right-6 flex items-center gap-2">
+      <div className={`absolute bottom-6 right-6 ${videoEnded ? 'flex' : 'hidden md:flex'} items-center gap-2`}>
         {images.map((_, i) => (
           <button
             key={i}
