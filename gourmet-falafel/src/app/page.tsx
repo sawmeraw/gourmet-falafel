@@ -9,6 +9,8 @@ import HighlightsStrip from "@/components/HighlightsStrip";
 import Menu from "@/components/Menu";
 import OpeningHours from "@/components/OpeningHours";
 import OurStory from "@/components/OurStory";
+import Reveal from "@/components/Reveal";
+import StickyOrderBar from "@/components/StickyOrderBar";
 import Testimonials from "@/components/Testimonials";
 import TileDivider from "@/components/TileDivider";
 
@@ -19,18 +21,19 @@ export default function Home() {
       <main>
         <Hero />
         <HighlightsStrip />
-        <FeaturedDishes />
-        <Menu />
+        <Reveal><FeaturedDishes /></Reveal>
+        <Reveal><Menu /></Reveal>
         <TileDivider height={36} />
-        <OurStory />
-        <Gallery />
-        <Testimonials />
+        <Reveal><OurStory /></Reveal>
+        <Reveal><Gallery /></Reveal>
+        <Reveal><Testimonials /></Reveal>
         <TileDivider height={36} />
-        <OpeningHours />
-        <DeliveryPlatforms />
+        <Reveal><OpeningHours /></Reveal>
+        <Reveal><DeliveryPlatforms /></Reveal>
       </main>
       <Footer />
       <FloatingActions />
+      <StickyOrderBar />
     </>
   );
 }
