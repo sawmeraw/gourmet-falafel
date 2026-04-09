@@ -3,97 +3,15 @@
 import Image from 'next/image';
 import { IoLocationSharp, IoTimeOutline } from 'react-icons/io5';
 import { useState, useEffect } from 'react';
-
-// 0 = Monday … 6 = Sunday. Times in 24h "HH:MM", null = closed.
-const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-const DAYS_SHORT = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-const locations = [
-  {
-    key: 'acm',
-    address: '44-60 Gouger St',
-    hours: [
-      { open: '09:00',    close: '14:00'    }, // Monday   – closed
-      { open: '07:00', close: '17:30' }, // Tuesday
-      { open: '09:00', close: '17:30' }, // Wednesday
-      { open: '09:00', close: '17:30' }, // Thursday
-      { open: '07:00', close: '21:00' }, // Friday
-      { open: '07:00', close: '15:00' }, // Saturday
-      { open: null,    close: null    }, // Sunday   – closed
-    ],
-  },
-  {
-    key: 'acp',
-    address: 'Shop 21, Lower Ground Level',
-    // Update these hours to match actual ACP trading hours
-    hours: [
-      { open: '09:00', close: '17:00' }, // Monday
-      { open: '09:00', close: '17:00' }, // Tuesday
-      { open: '09:00', close: '17:00' }, // Wednesday
-      { open: '09:00', close: '17:00' }, // Thursday
-      { open: '09:00', close: '20:00' }, // Friday
-      { open: '09:00', close: '17:00' }, // Saturday
-      { open: '11:00', close: '17:00' }, // Sunday
-    ],
-  },
-];
-
-function toMin(t: string) {
-  const [h, m] = t.split(':').map(Number);
-  return h * 60 + m;
-}
-
-function fmt12(t: string) {
-  const [h, m] = t.split(':').map(Number);
-  const p = h >= 12 ? 'PM' : 'AM';
-  const dh = h > 12 ? h - 12 : h === 0 ? 12 : h;
-  return `${dh}:${m.toString().padStart(2, '0')} ${p}`;
-}
-
-function formatSlot(open: string | null, close: string | null) {
-  if (!open || !close) return 'Closed';
-  return `${fmt12(open)} – ${fmt12(close)}`;
-}
-
-interface AdelaideTime {
-  displayTime: string;
-  weekday: string;
-  currentMin: number;
-}
-
-function getAdelaideTime(): AdelaideTime {
-  const now = new Date();
-  const parts = new Intl.DateTimeFormat('en-AU', {
-    timeZone: 'Australia/Adelaide',
-    weekday: 'long',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  }).formatToParts(now);
-
-  const weekday = parts.find(p => p.type === 'weekday')?.value ?? '';
-  const hour = parseInt(parts.find(p => p.type === 'hour')?.value ?? '0');
-  const minute = parseInt(parts.find(p => p.type === 'minute')?.value ?? '0');
-
-  const displayTime = new Intl.DateTimeFormat('en-AU', {
-    timeZone: 'Australia/Adelaide',
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true,
-  }).format(now).toUpperCase();
-
-  return { displayTime, weekday, currentMin: hour * 60 + minute };
-}
-
-function getStatus(loc: typeof locations[number], weekday: string, currentMin: number) {
-  const dayIdx = DAYS.indexOf(weekday);
-  if (dayIdx === -1) return { isOpen: false, label: 'Closed' };
-  const { open, close } = loc.hours[dayIdx];
-  if (!open || !close) return { isOpen: false, label: 'Closed today' };
-  if (currentMin < toMin(open))  return { isOpen: false, label: `Opens ${fmt12(open)}` };
-  if (currentMin >= toMin(close)) return { isOpen: false, label: `Closed at ${fmt12(close)}` };
-  return { isOpen: true, label: `Closes ${fmt12(close)}` };
-}
+import {
+  DAYS,
+  DAYS_SHORT,
+  locations,
+  formatSlot,
+  getStatus,
+  getAdelaideTime,
+  type AdelaideTime,
+} from '@/lib/locations';
 
 const AcpLogo = () => (
   <svg className="w-28 h-auto" viewBox="0 0 120 63" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -105,6 +23,7 @@ const AcpLogo = () => (
 
 export default function OpeningHours() {
   const [time, setTime] = useState<AdelaideTime | null>(null);
+  const [activeKey, setActiveKey] = useState(locations[0].key);
 
   useEffect(() => {
     setTime(getAdelaideTime());
@@ -113,6 +32,8 @@ export default function OpeningHours() {
   }, []);
 
   const todayIdx = time ? DAYS.indexOf(time.weekday) : -1;
+  const loc = locations.find(l => l.key === activeKey) ?? locations[0];
+  const status = time ? getStatus(loc, time.weekday, time.currentMin) : null;
 
   return (
     <section id="hours" className="bg-primary py-14 border-t border-gray-100">
@@ -132,69 +53,95 @@ export default function OpeningHours() {
           )}
         </div>
 
-        {/* Location cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {locations.map((loc) => {
-            const status = time ? getStatus(loc, time.weekday, time.currentMin) : null;
+        {/* Location selector */}
+        <div className="flex justify-center mb-6">
+          <div className="inline-flex bg-white/70 p-1 rounded-full shadow-sm">
+            {locations.map((l) => {
+              const active = l.key === activeKey;
+              return (
+                <button
+                  key={l.key}
+                  onClick={() => setActiveKey(l.key)}
+                  className={`px-5 py-2 text-sm font-semibold rounded-full transition-all duration-300 ${
+                    active
+                      ? 'bg-[color:var(--color-primary)] text-white shadow'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  {l.name}
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
-            return (
-              <div key={loc.key} className="bg-white rounded-2xl shadow-md overflow-hidden">
+        {/* Active location card */}
+        <div className="max-w-2xl mx-auto">
+          <div
+            key={loc.key}
+            className="bg-white rounded-2xl shadow-md overflow-hidden transition-all duration-500"
+            style={{ animation: 'loc-fade 400ms ease-out' }}
+          >
+            <style>{`
+              @keyframes loc-fade {
+                from { opacity: 0; transform: translateY(8px); }
+                to   { opacity: 1; transform: translateY(0); }
+              }
+            `}</style>
 
-                {/* Card header */}
-                <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-gray-100">
-                  <div>
-                    {loc.key === 'acm' ? (
-                      <div className="relative w-28 h-14">
-                        <Image src="/acm_logo.png" alt="Adelaide Central Market" fill style={{ objectFit: 'contain', objectPosition: 'left' }} />
-                      </div>
-                    ) : (
-                      <AcpLogo />
-                    )}
-                    <p className="text-xs text-gray-400 mt-1">{loc.address}</p>
+            {/* Card header */}
+            <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-gray-100">
+              <div>
+                {loc.key === 'acm' ? (
+                  <div className="relative w-28 h-14">
+                    <Image src="/acm_logo.png" alt="Adelaide Central Market" fill style={{ objectFit: 'contain', objectPosition: 'left' }} />
                   </div>
-
-                  {status && (
-                    <div className="text-right flex-shrink-0 ml-4">
-                      <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wide ${
-                        status.isOpen ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'
-                      }`}>
-                        {status.isOpen ? 'Open' : 'Closed'}
-                      </span>
-                      <p className="text-xs text-gray-500 mt-1">{status.label}</p>
-                    </div>
-                  )}
-                </div>
-
-                {/* Hours table */}
-                <div className="px-6 py-4 space-y-1.5">
-                  {DAYS.map((day, i) => {
-                    const { open, close } = loc.hours[i];
-                    const isToday = i === todayIdx;
-                    return (
-                      <div
-                        key={day}
-                        className={`flex justify-between items-center text-sm py-1 px-2 rounded-lg transition-colors ${
-                          isToday ? 'bg-primary font-semibold text-gray-900' : 'text-gray-600'
-                        }`}
-                      >
-                        <span className="w-10">{DAYS_SHORT[i]}</span>
-                        <span className={isToday ? 'text-gray-800' : 'text-gray-500'}>
-                          {formatSlot(open, close)}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* Footer note */}
-                <div className="px-6 pb-5">
-                  <p className="text-xs text-gray-400 border-t border-gray-100 pt-3">
-                    Hours may vary on public holidays.
-                  </p>
-                </div>
+                ) : (
+                  <AcpLogo />
+                )}
+                <p className="text-xs text-gray-400 mt-1">{loc.address}</p>
               </div>
-            );
-          })}
+
+              {status && (
+                <div className="text-right flex-shrink-0 ml-4">
+                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wide ${
+                    status.isOpen ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'
+                  }`}>
+                    {status.isOpen ? 'Open' : 'Closed'}
+                  </span>
+                  <p className="text-xs text-gray-500 mt-1">{status.label}</p>
+                </div>
+              )}
+            </div>
+
+            {/* Hours table */}
+            <div className="px-6 py-4 space-y-1.5">
+              {DAYS.map((day, i) => {
+                const { open, close } = loc.hours[i];
+                const isToday = i === todayIdx;
+                return (
+                  <div
+                    key={day}
+                    className={`flex justify-between items-center text-sm py-1 px-2 rounded-lg transition-colors ${
+                      isToday ? 'bg-primary font-semibold text-gray-900' : 'text-gray-600'
+                    }`}
+                  >
+                    <span className="w-10">{DAYS_SHORT[i]}</span>
+                    <span className={isToday ? 'text-gray-800' : 'text-gray-500'}>
+                      {formatSlot(open, close)}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Footer note */}
+            <div className="px-6 pb-5">
+              <p className="text-xs text-gray-400 border-t border-gray-100 pt-3">
+                Hours may vary on public holidays.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

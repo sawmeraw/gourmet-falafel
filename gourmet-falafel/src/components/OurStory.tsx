@@ -1,7 +1,8 @@
 "use client"
 
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import Counter from './Counter';
 
 const images = [
   // { src: '/cafe-shop.jpg',      alt: 'Gourmet Falafel kitchen' },
@@ -10,11 +11,46 @@ const images = [
 
 export default function OurStory() {
   const [current, setCurrent] = useState(0);
+  const imageWrapRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (images.length <= 1) return;
     const timer = setInterval(() => setCurrent(i => (i + 1) % images.length), 4000);
     return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
+
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const wrap = imageWrapRef.current;
+      const inner = innerRef.current;
+      if (!wrap || !inner) return;
+      const rect = wrap.getBoundingClientRect();
+      const vh = window.innerHeight;
+      if (rect.bottom < 0 || rect.top > vh) return;
+      // -1 (above) to 1 (below) progress through viewport
+      const progress = (rect.top + rect.height / 2 - vh / 2) / (vh / 2 + rect.height / 2);
+      const offset = Math.max(-40, Math.min(40, -progress * 40));
+      inner.style.transform = `translate3d(0, ${offset}px, 0) scale(1.15)`;
+    };
+
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, []);
 
   return (
@@ -24,7 +60,8 @@ export default function OurStory() {
 
           {/* Auto-swiper image */}
           <div className="w-full lg:w-1/2 flex-shrink-0">
-            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl">
+            <div ref={imageWrapRef} className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl">
+              <div ref={innerRef} className="absolute inset-0 will-change-transform" style={{ transform: 'scale(1.15)' }}>
               {images.map((img, i) => (
                 <div
                   key={img.src}
@@ -41,6 +78,7 @@ export default function OurStory() {
                   />
                 </div>
               ))}
+              </div>
               <div className="absolute inset-0 bg-gradient-to-tr from-black/20 to-transparent" />
 
               {/* Dot indicators */}
@@ -78,12 +116,12 @@ export default function OurStory() {
 
             <div className="flex flex-wrap gap-6 mt-10 justify-center lg:justify-start">
               <div className="text-center">
-                <p className="text-4xl font-bold text-[color:var(--color-primary)]">100%</p>
+                <Counter to={100} suffix="%" className="text-4xl font-bold text-[color:var(--color-primary)]" />
                 <p className="text-sm text-gray-500 mt-1 font-secondary">SA Made</p>
               </div>
               <div className="w-px bg-gray-200" />
               <div className="text-center">
-                <p className="text-4xl font-bold text-[color:var(--color-primary)]">2</p>
+                <Counter to={2} className="text-4xl font-bold text-[color:var(--color-primary)]" />
                 <p className="text-sm text-gray-500 mt-1 font-secondary">Locations</p>
               </div>
               <div className="w-px bg-gray-200" />
