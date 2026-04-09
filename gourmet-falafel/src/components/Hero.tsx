@@ -106,7 +106,7 @@ export default function Hero() {
           key={image.src}
           className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
             videoEnded ? '' : 'hidden md:block'
-          } ${i === current ? 'opacity-100 md:opacity-50' : 'opacity-0'}`}
+          } ${i === current ? 'opacity-100' : 'opacity-0'}`}
         >
           <Image
             src={image.src}
